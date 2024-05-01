@@ -14,10 +14,24 @@
   "contributes": {
     "commands": [
       {
-        "command": "tailwind-classify.helloWorld",
-        "title": "Hello World"
+        "command":"tailwind-classify.make-class",
+        "title":"Tailwind Classify: Make Class"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "tailwind-classify.make-class",
+          "when":"editorHasSelection"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "tailwind-classify.make-class",
+          "when":"editorHasSelection"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

@@ -13,13 +13,27 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('tailwind-classify.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from tailwind-classify!');
+	let makeClass = vscode.commands.registerCommand('tailwind-classify.make-class', async () => {
+		
+		const className = await vscode.window.showInputBox({placeHolder: "Choose a class name"})
+		const editor = vscode.window.activeTextEditor;
+		const selection = editor?.selection;
+		if(selection && !selection.isEmpty){
+			const selectionRange = new vscode.Range(selection.start.line, selection.start.character, selection.end.line, selection.end.character)
+			const highlighted = editor.document.getText(selectionRange);
+			if(className){
+				editor.edit(editBuilder => {
+					editBuilder.replace(selectionRange,className);
+				})
+			}
+
+			const newClass = `${className}{\n\r @apply ${highlighted} \n\r}`;
+
+		}
+
 	});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(makeClass);
 }
 
 // This method is called when your extension is deactivated
