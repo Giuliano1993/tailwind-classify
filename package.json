@@ -31,6 +31,16 @@
           "when":"editorHasSelection"
         }
       ]
+    },
+    "configuration":{
+      "title": "tailwind-classify",
+      "properties": {
+        "tailwind-classify.cssFile":{
+          "type":["string","null"],
+          "default":null,
+          "description":"The file you want write your classes into"
+        }
+      }
     }
   },
   "scripts": {

@@ -26,7 +26,12 @@ export function activate(context: vscode.ExtensionContext) {
 					editBuilder.replace(selectionRange,className);
 				})
 			}
-
+			const path = vscode.workspace.getConfiguration().get("tailwind-classify.cssFile");
+			console.log(path)
+			if(!path || path === ""){
+				const path = vscode.window.showInputBox({placeHolder: "enter your css file path"});
+				await vscode.workspace.getConfiguration().update("tailwind-classify.cssFile",path,vscode.ConfigurationTarget.Workspace)
+			}
 			const newClass = `${className}{\n\r @apply ${highlighted} \n\r}`;
 
 		}
